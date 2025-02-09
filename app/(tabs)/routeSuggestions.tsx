@@ -12,9 +12,12 @@ import {
 } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import Header from "@/components/Header";
+import { useNavigation } from '@react-navigation/native';
 
 
 const ClaimPointsScreen: React.FC = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
         {/* Header */}
@@ -71,6 +74,14 @@ const ClaimPointsScreen: React.FC = () => {
             <AntDesign name="questioncircleo" size={20} color="#666" />
             <Text style={styles.helpText}>Need help finding your ticket number?</Text>
             <AntDesign name="right" size={16} color="#666" />
+          </TouchableOpacity>
+
+          {/* New Spend Points Button */}
+          <TouchableOpacity 
+            style={styles.spendButton} 
+            onPress={() => navigation.navigate('market')}
+          >
+            <Text style={styles.spendButtonText}>Spend Your Points at the Marketplace!</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -249,6 +260,19 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 14,
     marginHorizontal: 10,
+  },
+  spendButton: {
+    backgroundColor: '#32CD32',
+    borderRadius: 12,
+    height: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  spendButtonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
