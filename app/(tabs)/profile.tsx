@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function DashboardScreen() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Eco-Points Balance: 4750</Text>
-      <Text style={styles.subtitle}>Recent Activities</Text>
-      {/* Add progress bar and activity list here */}
+      <Text style={styles.title}>Traveler Profile</Text>
+      <Text style={styles.subtitle}>Eco-Points: 4750</Text>
+      {/* Add profile details and eco-passport links */}
     </View>
   );
 }
