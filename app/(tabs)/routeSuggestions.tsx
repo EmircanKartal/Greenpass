@@ -12,12 +12,15 @@ import {
 } from 'react-native';
 import { AntDesign } from "@expo/vector-icons";
 import Header from "@/components/Header";
-import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 
+// Add this type definition
+type RootStackParamList = {
+  market: undefined;
+  // Add other routes as needed
+};
 
 const ClaimPointsScreen: React.FC = () => {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView style={styles.container}>
         {/* Header */}
@@ -79,7 +82,7 @@ const ClaimPointsScreen: React.FC = () => {
           {/* New Spend Points Button */}
           <TouchableOpacity 
             style={styles.spendButton} 
-            onPress={() => navigation.navigate('market')}
+            onPress={() => router.push('/market')}
           >
             <Text style={styles.spendButtonText}>Spend Your Points at the Marketplace!</Text>
           </TouchableOpacity>
