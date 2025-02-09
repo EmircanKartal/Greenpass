@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,9 @@ import {
   TextStyle,
   ImageStyle,
   ImageBackground,
-} from 'react-native';
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import happyManProfile from '../../assets/images/happy-man-profile.jpeg';
+import happyManProfile from "../../assets/images/happy-man-profile.jpeg";
 
 interface Styles {
   container: ViewStyle;
@@ -67,7 +67,12 @@ interface MenuItemProps extends MenuItem {
   icon?: React.ReactNode;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ icon, title, subtitle, onPress }) => (
+const MenuItem: React.FC<MenuItemProps> = ({
+  icon,
+  title,
+  subtitle,
+  onPress,
+}) => (
   <TouchableOpacity style={styles.menuItem} onPress={onPress}>
     <View style={styles.menuIcon}>
       {icon || <AntDesign name="star" size={24} color="#E0E0E0" />}
@@ -86,42 +91,42 @@ const ProfileScreen: React.FC = () => {
     points: 4750,
     level: "Eco Pioneer",
     battlePassProgress: 75,
-    avatarUrl: happyManProfile
+    avatarUrl: happyManProfile,
   };
 
   console.log(userProfile.avatarUrl);
 
   const menuItems: MenuItem[] = [
-    { 
-      title: "Achievements", 
+    {
+      title: "Achievements",
       subtitle: "12 Badges Earned",
       icon: <AntDesign name="Trophy" size={24} color="#32CD32" />,
-      onPress: () => console.log("Achievements pressed")
+      onPress: () => console.log("Achievements pressed"),
     },
-    { 
-      title: "Friends", 
+    {
+      title: "Friends",
       subtitle: "Connect & Compare",
       icon: <AntDesign name="team" size={24} color="#32CD32" />,
-      onPress: () => console.log("Friends pressed")
+      onPress: () => console.log("Friends pressed"),
     },
-    { 
-      title: "Rewards", 
+    {
+      title: "Rewards",
       subtitle: "View Store",
       icon: <AntDesign name="gift" size={24} color="#32CD32" />,
-      onPress: () => console.log("Rewards pressed")
+      onPress: () => console.log("Rewards pressed"),
     },
-    { 
-      title: "Notifications", 
+    {
+      title: "Notifications",
       subtitle: "Manage Alerts",
       icon: <AntDesign name="bells" size={24} color="#32CD32" />,
-      onPress: () => console.log("Notifications pressed")
+      onPress: () => console.log("Notifications pressed"),
     },
-    { 
-      title: "Settings", 
+    {
+      title: "Settings",
       subtitle: "Account Preferences",
       icon: <AntDesign name="setting" size={24} color="#32CD32" />,
-      onPress: () => console.log("Settings pressed")
-    }
+      onPress: () => console.log("Settings pressed"),
+    },
   ];
 
   return (
@@ -130,13 +135,13 @@ const ProfileScreen: React.FC = () => {
         {/* Profile Header */}
         <View style={styles.headerContainer}>
           <ImageBackground
-            source={require('../../assets/images/transparent-background-profile-banner.jpeg')}
+            source={require("../../assets/images/transparent-background-profile-banner.jpeg")}
             style={styles.headerBackground}
           >
             <View style={styles.headerOverlay}>
               <View style={styles.header}>
                 <Image
-                  source={require('../../assets/images/happy-man-profile.jpeg')}
+                  source={require("../../assets/images/happy-man-profile.jpeg")}
                   style={styles.avatar}
                 />
                 <View style={styles.headerText}>
@@ -154,18 +159,20 @@ const ProfileScreen: React.FC = () => {
             <Text style={styles.pointsTitle}>EcoPoints</Text>
             <Text style={styles.points}>{userProfile.points}</Text>
           </View>
-          
+
           {/* Battle Pass Progress */}
           <View style={styles.progressContainer}>
             <View style={styles.progressHeader}>
               <Text style={styles.progressText}>GreenPass Progress</Text>
-              <Text style={styles.progressPercent}>{userProfile.battlePassProgress}%</Text>
+              <Text style={styles.progressPercent}>
+                {userProfile.battlePassProgress}%
+              </Text>
             </View>
             <View style={styles.progressBar}>
-              <View 
+              <View
                 style={[
                   styles.progressFill,
-                  { width: `${userProfile.battlePassProgress}%` }
+                  { width: `${userProfile.battlePassProgress}%` },
                 ]}
               />
             </View>
@@ -194,11 +201,11 @@ const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create<Styles>({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 20,
   },
   avatar: {
@@ -206,27 +213,27 @@ const styles = StyleSheet.create<Styles>({
     height: 80,
     borderRadius: 40,
     borderWidth: 4,
-    borderColor: '#FFFFFF',
+    borderColor: "#FFFFFF",
   },
   headerText: {
     marginLeft: 15,
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
   level: {
     fontSize: 16,
-    color: '#EDEDED',
+    color: "#EDEDED",
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     margin: 15,
     marginTop: 5,
     borderRadius: 15,
     padding: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -236,67 +243,67 @@ const styles = StyleSheet.create<Styles>({
     elevation: 5,
   },
   pointsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 15,
   },
   pointsTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   points: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#32CD32',
+    fontWeight: "bold",
+    color: "#2f7d31",
   },
   progressContainer: {
     marginTop: 10,
   },
   progressHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 8,
   },
   progressText: {
     fontSize: 14,
-    color: '#666666',
+    color: "#666666",
   },
   progressPercent: {
     fontSize: 14,
-    color: '#666666',
+    color: "#666666",
   },
   progressBar: {
     height: 8,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: "#E0E0E0",
     borderRadius: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   progressFill: {
-    height: '100%',
-    backgroundColor: '#32CD32',
+    height: "100%",
+    backgroundColor: "#32cd32",
     borderRadius: 4,
   },
   menu: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     marginTop: 15,
   },
   menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    borderBottomColor: "#E0E0E0",
   },
   menuIcon: {
     width: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   iconPlaceholder: {
     width: 24,
     height: 24,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: "#E0E0E0",
     borderRadius: 12,
   },
   menuContent: {
@@ -305,19 +312,19 @@ const styles = StyleSheet.create<Styles>({
   },
   menuTitle: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   menuSubtitle: {
     fontSize: 14,
-    color: '#666666',
+    color: "#666666",
     marginTop: 2,
   },
   menuArrow: {
     fontSize: 20,
-    color: '#CCCCCC',
+    color: "#CCCCCC",
   },
   impactCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     margin: 15,
     padding: 15,
     borderRadius: 15,
@@ -325,26 +332,26 @@ const styles = StyleSheet.create<Styles>({
   },
   impactTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#32CD32',
+    fontWeight: "600",
+    color: "#2f7d31",
     marginBottom: 8,
   },
   impactText: {
     fontSize: 14,
-    color: '#666666',
+    color: "#666666",
     lineHeight: 20,
   },
   headerContainer: {
     height: 150,
   },
   headerBackground: {
-    width: '100%',
+    width: "100%",
     height: 120,
   },
   headerOverlay: {
-    backgroundColor: 'rgba(76, 175, 80, 0.75)',
+    backgroundColor: "rgba(76, 175, 80, 0.75)",
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
 });
 

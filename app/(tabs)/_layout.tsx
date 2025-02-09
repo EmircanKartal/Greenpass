@@ -18,7 +18,7 @@ const RoutesIcon = () => (
       width: 72,
       height: 72,
       borderRadius: "100%",
-      backgroundColor: "#32CD32",
+      backgroundColor: "#2f7d31",
       justifyContent: "center",
       alignItems: "center",
       marginBottom: 20, // To make the button hover a bit over the navbar

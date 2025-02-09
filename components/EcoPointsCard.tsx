@@ -1,97 +1,88 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 
 type EcoPointsCardProps = {
   progress: number;
-  points: number;
 };
 
-export default function EcoPointsCard({
-  progress,
-  points,
-}: EcoPointsCardProps) {
+export default function EcoPointsCard({ progress }: EcoPointsCardProps) {
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>Battle Pass Progress</Text>
-      <View style={styles.progressContainer}>
-        <Text
-          style={styles.progressText}
-        >{`Tier 3: Silver (${progress}%)`}</Text>
-        <View style={styles.progressBarBackground}>
-          <View style={[styles.progressBarFill, { width: `${progress}%` }]} />
+    <ImageBackground
+      source={require("@/assets/images/airport.png")} // Replace with the actual path to your image
+      style={styles.backgroundImage}
+      imageStyle={styles.backgroundImageStyle}
+    >
+      <View style={styles.outerCard}>
+        <View style={styles.innerCard}>
+          {/* Title */}
+          <Text style={styles.title}>GreenPass Progress</Text>
+
+          {/* Progress Bar */}
+          <View style={styles.progressContainer}>
+            <Text style={styles.progressText}>{`Progress: ${progress}%`}</Text>
+            <View style={styles.progressBarBackground}>
+              <View
+                style={[styles.progressBarFill, { width: `${progress}%` }]}
+              />
+            </View>
+          </View>
         </View>
       </View>
-      <Text style={styles.ecoPointsText}>{`+${points} EcoPoints`}</Text>
-      <View style={styles.rewardsContainer}>
-        <View style={styles.reward}>
-          <FontAwesome5 name="medal" size={24} color="#007BFF" />
-          <Text style={styles.rewardText}>Exclusive Badge</Text>
-        </View>
-        <View style={styles.reward}>
-          <FontAwesome5 name="plane" size={24} color="#007BFF" />
-          <Text style={styles.rewardText}>Flight Miles</Text>
-        </View>
-      </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#f9f9f9",
+  backgroundImage: {
+    width: "100%",
+    height: 200, // Adjust height as needed
+    marginBottom: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundImageStyle: {
+    borderRadius: 16,
+  },
+  outerCard: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white
     borderRadius: 16,
     padding: 16,
-    marginVertical: 12,
+    width: "90%",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+  },
+  innerCard: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    alignItems: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 8,
+    marginBottom: 12,
   },
   progressContainer: {
-    marginVertical: 12,
+    width: "100%",
+    marginTop: 8,
   },
   progressText: {
     fontSize: 14,
     color: "#666",
     marginBottom: 8,
+    textAlign: "center",
   },
   progressBarBackground: {
-    height: 8,
+    height: 10,
     backgroundColor: "#e0e0e0",
-    borderRadius: 4,
+    borderRadius: 5,
     overflow: "hidden",
   },
   progressBarFill: {
     height: "100%",
     backgroundColor: "#32CD32",
-  },
-  ecoPointsText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#007BFF",
-    marginTop: 12,
-  },
-  rewardsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 12,
-  },
-  reward: {
-    alignItems: "center",
-  },
-  rewardText: {
-    fontSize: 12,
-    fontWeight: "600",
-    textAlign: "center",
-    marginTop: 8,
-    color: "#007BFF",
   },
 });
