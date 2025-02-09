@@ -82,7 +82,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, title, subtitle, onPress }) =
 
 const ProfileScreen: React.FC = () => {
   const userProfile: UserProfile = {
-    name: "Alex Green",
+    name: "Hazerfen Çelebi",
     points: 4750,
     level: "Eco Pioneer",
     battlePassProgress: 75,
