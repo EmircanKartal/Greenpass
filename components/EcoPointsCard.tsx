@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
 type EcoPointsCardProps = {
   progress: number;
@@ -44,45 +50,63 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   outerCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white
+    backgroundColor: "rgba(255, 255, 255, 0.84)", // Semi-transparent white
     borderRadius: 16,
-    padding: 16,
-    width: "90%",
+    padding: 26,
+    width: "100%",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
   },
   innerCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.0)", // Semi-transparent white
     borderRadius: 12,
-    padding: 16,
+    padding: 30,
+
     alignItems: "center",
+    width: "100%",
   },
   title: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 12,
+    marginBottom: 10,
+    textAlign: "center",
   },
   progressContainer: {
     width: "100%",
-    marginTop: 8,
+    marginTop: 5,
   },
   progressText: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 8,
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#444",
+    marginBottom: 16,
     textAlign: "center",
   },
   progressBarBackground: {
-    height: 10,
+    height: 12,
     backgroundColor: "#e0e0e0",
-    borderRadius: 5,
+    borderRadius: 6,
     overflow: "hidden",
   },
   progressBarFill: {
     height: "100%",
     backgroundColor: "#32CD32",
+  },
+  button: {
+    backgroundColor: "#2f7d31",
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    width: "80%",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });

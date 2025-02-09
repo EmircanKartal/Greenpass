@@ -15,6 +15,8 @@ type RecentActivitiesCardProps = {
 export default function RecentActivitiesCard({
   activity,
 }: RecentActivitiesCardProps) {
+  const isPositive = activity.points.includes("+");
+
   return (
     <View style={styles.card}>
       <Image source={activity.logo} style={styles.logo} />
@@ -22,7 +24,14 @@ export default function RecentActivitiesCard({
         <Text style={styles.activityTitle}>{activity.title}</Text>
         <Text style={styles.activityDate}>{activity.date}</Text>
       </View>
-      <Text style={styles.points}>{activity.points}</Text>
+      <Text
+        style={[
+          styles.points,
+          { color: isPositive ? "#32CD32" : "#FF6347" }, // Green for positive, red for negative
+        ]}
+      >
+        {activity.points}
+      </Text>
     </View>
   );
 }
@@ -33,35 +42,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 12,
-    padding: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     marginVertical: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    elevation: 3,
   },
   logo: {
     width: 40,
     height: 40,
     borderRadius: 8,
-    marginRight: 12,
+    marginRight: 16,
   },
   details: {
     flex: 1,
   },
   activityTitle: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: "#333",
+    marginBottom: 4,
   },
   activityDate: {
     fontSize: 12,
-    color: "#666",
+    color: "#888",
   },
   points: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#32CD32",
+    fontWeight: "600",
   },
 });
