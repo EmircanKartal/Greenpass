@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/LogoImg.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.emachu18.Greenpass"
     },
     "web": {
       "bundler": "metro",
@@ -28,10 +29,19 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "58ef25f4-e82d-4bd2-9bd9-4b4711f870f7"
+      }
     }
   }
 }

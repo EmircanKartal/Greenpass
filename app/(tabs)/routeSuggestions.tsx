@@ -9,13 +9,22 @@ import {
   ImageBackground,
   StatusBar,
   Platform,
-  ScrollView, // Import ScrollView
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Header from "@/components/Header";
 import { router } from "expo-router";
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 const ClaimPointsScreen: React.FC = () => {
+  let [fontsLoaded] = useFonts({
+    "Poppins-Regular": Poppins_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null; // Prevents rendering glitches before fonts load
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -27,7 +36,6 @@ const ClaimPointsScreen: React.FC = () => {
       >
         <View style={styles.overlay}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {/* Add contentContainerStyle */}
             {/* Header Card */}
             <View style={styles.headerCard}>
               <View style={styles.iconContainer}>
@@ -38,6 +46,7 @@ const ClaimPointsScreen: React.FC = () => {
                 Turn your eco-friendly choices into rewards
               </Text>
             </View>
+
             {/* Main Card */}
             <View style={styles.mainCard}>
               <View style={styles.inputSection}>
@@ -64,6 +73,7 @@ const ClaimPointsScreen: React.FC = () => {
                 <Text style={styles.confirmButtonText}>Confirm</Text>
               </TouchableOpacity>
             </View>
+
             {/* Points Display Card */}
             <View style={styles.pointsCard}>
               <View style={styles.pointsHeader}>
@@ -73,6 +83,7 @@ const ClaimPointsScreen: React.FC = () => {
               <Text style={styles.pointsAmount}>4750</Text>
               <Text style={styles.pointsLabel}>ECO-Points</Text>
             </View>
+
             {/* Help Card */}
             <TouchableOpacity style={styles.helpCard}>
               <AntDesign name="questioncircleo" size={20} color="#666" />
@@ -81,7 +92,8 @@ const ClaimPointsScreen: React.FC = () => {
               </Text>
               <AntDesign name="right" size={16} color="#666" />
             </TouchableOpacity>
-            {/* New Spend Points Button */}
+
+            {/* Spend Points Button */}
             <TouchableOpacity
               style={styles.spendButton}
               onPress={() => router.push("/market")}
@@ -129,28 +141,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#2E7D32",
     marginBottom: 8,
+    fontFamily: "Poppins-Regular",
   },
   subtitle: {
     fontSize: 16,
     color: "#666",
     textAlign: "center",
+    fontFamily: "Poppins-Regular",
   },
   mainCard: {
     backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    elevation: 4,
   },
   inputSection: {
     marginBottom: 20,
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginBottom: 10,
-    fontWeight: "500",
+    fontFamily: "Poppins-Regular",
   },
   inputWrapper: {
     flexDirection: "row",
@@ -174,6 +178,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 18,
     color: "#333",
+    fontFamily: "Poppins-Regular",
   },
   inputIcon: {
     padding: 15,
@@ -186,17 +191,7 @@ const styles = StyleSheet.create({
     height: 55,
     alignItems: "center",
     justifyContent: "center",
-    ...Platform.select({
-      ios: {
-        shadowColor: "#2f7d31",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    elevation: 4,
   },
   buttonIcon: {
     marginRight: 8,
@@ -205,6 +200,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "Poppins-Regular",
   },
   pointsCard: {
     backgroundColor: "#FFF",
@@ -212,17 +208,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     marginBottom: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    elevation: 4,
   },
   pointsHeader: {
     flexDirection: "row",
@@ -233,17 +219,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     marginLeft: 8,
-    fontWeight: "500",
+    fontFamily: "Poppins-Regular",
   },
   pointsAmount: {
     fontSize: 36,
     fontWeight: "bold",
     color: "#2f7d31",
+    fontFamily: "Poppins-Regular",
   },
   pointsLabel: {
     fontSize: 14,
     color: "#666",
     marginTop: 5,
+    fontFamily: "Poppins-Regular",
   },
   helpCard: {
     flexDirection: "row",
@@ -251,23 +239,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 15,
     padding: 15,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    elevation: 4,
   },
   helpText: {
     flex: 1,
     color: "#666",
     fontSize: 14,
     marginHorizontal: 10,
+    fontFamily: "Poppins-Regular",
   },
   spendButton: {
     backgroundColor: "#2f7d31",
@@ -282,11 +261,11 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "Poppins-Regular",
   },
   scrollViewContent: {
-    // Style for the ScrollView's content
-    flexGrow: 1, // Important: allows content to expand and fill the ScrollView
-    padding: 20, // Add padding here if needed
+    flexGrow: 1,
+    padding: 20,
   },
 });
 

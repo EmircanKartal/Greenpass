@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Animated,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,6 +19,7 @@ type HomePageCardProps = {
   imageUrl: any;
   navigateTo: "routeSuggestions" | "market";
   icon: string;
+  animate: boolean; // Controls animation
 };
 
 type RootStackParamList = {
@@ -33,40 +35,72 @@ export default function HomePageCard({
   imageUrl,
   navigateTo,
   icon,
+  animate,
 }: HomePageCardProps) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  // Animation references
+  const slideAnim = useRef(new Animated.Value(-100)).current; // Starts from the left (-100px)
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Starts with 0 opacity
+
+  useEffect(() => {
+    if (animate) {
+      Animated.parallel([
+        Animated.timing(slideAnim, {
+          toValue: 0, // Moves to its normal position
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1, // Becomes fully visible
+          duration: 400,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }
+  }, [animate]); // Runs only when animate changes
+
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate(navigateTo)}
-      style={styles.card}
+    <Animated.View
+      style={[
+        styles.animatedContainer,
+        { transform: [{ translateX: slideAnim }], opacity: fadeAnim },
+      ]}
     >
-      <ImageBackground
-        source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
-        style={styles.image}
-        imageStyle={{ borderTopLeftRadius: 26, borderTopRightRadius: 26 }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate(navigateTo)}
+        style={styles.card}
       >
-        <LinearGradient
-          colors={["rgba(69, 237, 223, 0.44)", "rgba(212, 212, 212, 0.28)"]}
-          style={styles.overlay}
-        />
-      </ImageBackground>
-      <View style={[styles.content, { backgroundColor }]}>
-        <View style={styles.topicContainer}>
-          <FontAwesome5 name={icon} size={20} color={textColor} />
-          <Text style={[styles.topic, { color: textColor }]}>{topic}</Text>
+        <ImageBackground
+          source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
+          style={styles.image}
+          imageStyle={{ borderTopLeftRadius: 26, borderTopRightRadius: 26 }}
+        >
+          <LinearGradient
+            colors={["rgba(69, 237, 223, 0.44)", "rgba(212, 212, 212, 0.28)"]}
+            style={styles.overlay}
+          />
+        </ImageBackground>
+        <View style={[styles.content, { backgroundColor }]}>
+          <View style={styles.topicContainer}>
+            <FontAwesome5 name={icon} size={20} color={textColor} />
+            <Text style={[styles.topic, { color: textColor }]}>{topic}</Text>
+          </View>
+          <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Learn more</Text>
+            <FontAwesome5 name="arrow-right" size={18} color="#fff" />
+          </TouchableOpacity>
         </View>
-        <Text style={[styles.title, { color: textColor }]}>{title}</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Learn more</Text>
-          <FontAwesome5 name="arrow-right" size={18} color="#fff" />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
+  animatedContainer: {
+    width: "100%",
+  },
   card: {
     width: "100%",
     borderRadius: 26,

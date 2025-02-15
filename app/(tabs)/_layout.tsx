@@ -26,7 +26,7 @@ const ScanCodeIcon = () => (
       marginBottom: 20, // Floating effect
     }}
   >
-    <MaterialIcons name="qr-code-scanner" size={40} color="white" />
+    <MaterialIcons name="qr-code-scanner" size={40} color="#E8F5E8" />
   </View>
 );
 

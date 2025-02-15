@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -30,7 +30,23 @@ type RootStackParamList = {
 
 export default function HomeScreen() {
   const [isPopupVisible, setPopupVisible] = useState(true);
+  const [animateUserCard, setAnimateUserCard] = useState(false);
+  const [animateCards, setAnimateCards] = useState(false);
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  // Trigger animations only after the popup is closed
+  useEffect(() => {
+    if (!isPopupVisible) {
+      setTimeout(() => {
+        setAnimateUserCard(true); // Start EP & progress bar animation after 300ms
+      }, 300);
+
+      setTimeout(() => {
+        setAnimateCards(true); // Start home page card animations slightly later
+      }, 600);
+    }
+  }, [isPopupVisible]);
 
   return (
     <View style={styles.container}>
@@ -45,27 +61,29 @@ export default function HomeScreen() {
 
       <ScrollView contentContainerStyle={styles.content}>
         {/* User Card */}
-        <UserCard profile={userProfile} />
+        <UserCard profile={userProfile} animate={animateUserCard} />
 
         {/* Home Page Cards */}
         <HomePageCard
-          title="Eco-Friendly Travel"
-          topic="Sustainable Travel"
+          title="Claim Your Eco-Points"
+          topic="Sustainable Flights"
           backgroundColor="#a2f2c9"
           textColor="#1d6367"
           imageUrl="https://www.flyairnorth.com/sites/default/files/styles/hero_image_lg/public/2025-02/Valentines%20Sale%202025%20-%20AirNorth.com%20Hero.png?h=40f26a99&itok=kT5RNUKc"
           navigateTo="routeSuggestions"
-          icon="plane" // ✈️ Added relevant icon
+          icon="plane"
+          animate={animateCards}
         />
 
         <HomePageCard
-          title="Sustainable Shopping"
-          topic="Eco-Conscious Stores"
+          title="Shop with Your Points"
+          topic="Eco-Store"
           backgroundColor="#1d6367"
           textColor="#ffffff"
           imageUrl={marketImage}
           navigateTo="market"
-          icon="shopping-bag" // 🛍️ Added relevant icon
+          icon="shopping-bag"
+          animate={animateCards}
         />
 
         {/* Transactions Section */}

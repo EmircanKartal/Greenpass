@@ -10,6 +10,8 @@ import {
   ImageBackground,
 } from "react-native";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
+import { useFonts, Jost_700Bold } from "@expo-google-fonts/jost";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
 import happyManProfile from "../../assets/images/happy-man-profile.jpeg";
 
 const ProfileScreen: React.FC = () => {
@@ -49,6 +51,15 @@ const ProfileScreen: React.FC = () => {
     },
   ];
 
+  let [fontsLoaded] = useFonts({
+    "Jost-Bold": Jost_700Bold,
+    "Poppins-Regular": Poppins_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null; // Prevents rendering glitches before fonts load
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
@@ -86,7 +97,7 @@ const ProfileScreen: React.FC = () => {
         {discoverItems.map((item, index) => (
           <TouchableOpacity key={index} style={styles.card}>
             <View style={styles.iconContainer}>
-              <FontAwesome5 name={item.icon} size={25} color="#2f7d31" />
+              <FontAwesome5 name={item.icon} size={28} color="#2f7d31" />
             </View>
             <View style={styles.cardTextContainer}>
               <Text style={styles.cardTitle}>{item.title}</Text>
@@ -141,6 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     color: "#333",
+    fontFamily: "Jost-Bold", // ✅ Jost for main name
   },
   statsRow: {
     flexDirection: "row",
@@ -151,6 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#32CD32",
     fontWeight: "600",
+    fontFamily: "Poppins-Regular", // ✅ Poppins for stats
   },
   separator: {
     width: 8,
@@ -161,13 +174,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "600",
     letterSpacing: 1,
     color: "#333",
     textAlign: "left",
     marginTop: 60,
     marginBottom: 16,
     marginLeft: 30,
+    fontFamily: "Poppins-Regular", // ✅ Jost for section title
   },
   card: {
     flexDirection: "row",
@@ -180,8 +194,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   iconContainer: {
-    width: 52,
-    height: 52,
+    width: 56,
+    height: 56,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E8F5E8",
@@ -192,14 +206,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "600",
     letterSpacing: 1,
     color: "#333",
+    fontFamily: "Poppins-Regular", // ✅ Jost for card titles
   },
   cardSubtitle: {
     fontSize: 15,
     color: "#888",
+    fontFamily: "Poppins-Regular", // ✅ Poppins for subtitles
   },
 });
 

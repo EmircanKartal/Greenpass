@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { useFonts, Jost_700Bold } from "@expo-google-fonts/jost";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins";
 
 export type TransactionProps = {
   title: string;
@@ -22,19 +23,28 @@ const transactions: TransactionProps[] = [
     company: "A-Jet",
     title: "Eco Flight",
     points: "+150 EP",
-    date: "Nov 23",
+    date: "Feb 13",
     logo: require("@/assets/images/a-jet.png"),
   },
   {
     company: "Sun Express",
     title: "Eco Flight",
     points: "+180 EP",
-    date: "Nov 16",
-    logo: require("@/assets/images/sun-express.png"),
+    date: "Feb 10",
+    logo: require("@/assets/images/image.png"),
   },
 ];
 
 export default function TransactionsList() {
+  let [fontsLoaded] = useFonts({
+    "Jost-Bold": Jost_700Bold,
+    "Poppins-Regular": Poppins_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null; // Prevents UI glitches before fonts load
+  }
+
   return (
     <View>
       {transactions.map((transaction, index) => (
@@ -96,11 +106,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     letterSpacing: 1,
     color: "#333",
+    fontFamily: "Jost-Bold", // ✅ Jost for titles
   },
   subtitle: {
     fontSize: 14,
     fontWeight: "600",
     color: "#888",
+    fontFamily: "Poppins-Regular", // ✅ Poppins for descriptions
   },
   rightSection: {
     alignItems: "flex-end",
@@ -108,14 +120,11 @@ const styles = StyleSheet.create({
   points: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "Jost-Bold", // ✅ Jost for EP values
   },
   date: {
     fontSize: 14,
     color: "#888",
-  },
-  gradientOverlay: {
-    padding: 8,
-    borderRadius: 8,
-    alignItems: "center",
+    fontFamily: "Poppins-Regular", // ✅ Poppins for date text
   },
 });

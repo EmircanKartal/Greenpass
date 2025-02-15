@@ -1,7 +1,21 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Animated,
+  Easing,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import {
+  useFonts,
+  Poppins_700Bold,
+  Poppins_400Regular,
+} from "@expo-google-fonts/poppins";
+import AppLoading from "expo-app-loading";
 
 type UserProfile = {
   name: string;
@@ -11,13 +25,61 @@ type UserProfile = {
   avatarUrl: any;
 };
 
-// Define the available screens in navigation
 type RootStackParamList = {
   profile: undefined;
 };
 
-export default function UserCard({ profile }: { profile: UserProfile }) {
+export default function UserCard({
+  profile,
+  animate,
+}: {
+  profile: UserProfile;
+  animate: boolean;
+}) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  // Animated EP Value
+  const animatedEP = useRef(new Animated.Value(0)).current;
+  const animatedProgress = useRef(new Animated.Value(0)).current;
+  const [displayEP, setDisplayEP] = useState(0);
+
+  useEffect(() => {
+    if (animate) {
+      // Animate EP value
+      Animated.timing(animatedEP, {
+        toValue: profile.points,
+        duration: 2000,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: false,
+      }).start();
+
+      animatedEP.addListener(({ value }) => {
+        setDisplayEP(Math.floor(value));
+      });
+
+      // Animate Progress Bar
+      Animated.timing(animatedProgress, {
+        toValue: profile.battlePassProgress,
+        duration: 1800,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: false,
+      }).start();
+    }
+
+    return () => {
+      animatedEP.removeAllListeners();
+      animatedProgress.removeAllListeners();
+    };
+  }, [animate]);
+
+  let [fontsLoaded] = useFonts({
+    "Poppins-Bold": Poppins_700Bold,
+    "Poppins-Regular": Poppins_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={styles.card}>
@@ -33,14 +95,19 @@ export default function UserCard({ profile }: { profile: UserProfile }) {
           <FontAwesome5 name="leaf" size={16} color="#32CD32" />
           <Text style={styles.level}>{profile.level} | </Text>
           <FontAwesome5 name="coins" size={16} color="#32CD32" />
-          <Text style={styles.greenText}> 4750 EP</Text>
-          <Text style={styles.level}> / ton CO₂</Text>
+          <Text style={styles.greenText}> {displayEP} EP</Text>
+          <Text style={styles.level}> / tonnes CO₂</Text>
         </View>
         <View style={styles.progressContainer}>
-          <View
+          <Animated.View
             style={[
               styles.progressBar,
-              { width: `${profile.battlePassProgress}%` },
+              {
+                width: animatedProgress.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ["0%", `${profile.battlePassProgress}%`],
+                }),
+              },
             ]}
           />
         </View>
@@ -69,7 +136,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "Poppins-Bold",
     color: "#333",
   },
   levelContainer: {
@@ -81,12 +148,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     marginLeft: 4,
+    fontFamily: "Poppins-Regular",
   },
   greenText: {
     fontSize: 14,
     color: "#32CD32",
     fontWeight: "bold",
     marginLeft: 4,
+    fontFamily: "Poppins-Bold",
   },
   progressContainer: {
     height: 6,
