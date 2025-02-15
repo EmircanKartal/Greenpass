@@ -27,7 +27,6 @@ const ClaimPointsScreen: React.FC = () => {
       >
         <View style={styles.overlay}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {" "}
             {/* Add contentContainerStyle */}
             {/* Header Card */}
             <View style={styles.headerCard}>

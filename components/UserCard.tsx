@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ProgressBarAndroid,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 type UserProfile = {
   name: string;
@@ -16,18 +11,30 @@ type UserProfile = {
   avatarUrl: any;
 };
 
+// Define the available screens in navigation
+type RootStackParamList = {
+  profile: undefined;
+};
+
 export default function UserCard({ profile }: { profile: UserProfile }) {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <View style={styles.card}>
-      {/* Profile Image */}
-      <Image source={profile.avatarUrl} style={styles.avatar} />
+      {/* Profile Image - Clickable */}
+      <TouchableOpacity onPress={() => navigation.navigate("profile")}>
+        <Image source={profile.avatarUrl} style={styles.avatar} />
+      </TouchableOpacity>
 
       {/* User Details */}
       <View style={styles.details}>
         <Text style={styles.name}>{profile.name}</Text>
         <View style={styles.levelContainer}>
           <FontAwesome5 name="leaf" size={16} color="#32CD32" />
-          <Text style={styles.level}>{profile.level}</Text>
+          <Text style={styles.level}>{profile.level} | </Text>
+          <FontAwesome5 name="coins" size={16} color="#32CD32" />
+          <Text style={styles.greenText}> 4750 EP</Text>
+          <Text style={styles.level}> / ton CO₂</Text>
         </View>
         <View style={styles.progressContainer}>
           <View
@@ -37,12 +44,6 @@ export default function UserCard({ profile }: { profile: UserProfile }) {
             ]}
           />
         </View>
-      </View>
-
-      {/* Notification Icon */}
-      <View style={styles.notification}>
-        <FontAwesome5 name="bell" size={20} color="#333" />
-        <View style={styles.notificationDot} />
       </View>
     </View>
   );
@@ -56,11 +57,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
   },
   avatar: {
     width: 70,
@@ -84,7 +80,13 @@ const styles = StyleSheet.create({
   level: {
     fontSize: 14,
     color: "#666",
-    marginLeft: 8,
+    marginLeft: 4,
+  },
+  greenText: {
+    fontSize: 14,
+    color: "#32CD32",
+    fontWeight: "bold",
+    marginLeft: 4,
   },
   progressContainer: {
     height: 6,
@@ -96,17 +98,5 @@ const styles = StyleSheet.create({
   progressBar: {
     height: "100%",
     backgroundColor: "#32CD32",
-  },
-  notification: {
-    position: "relative",
-  },
-  notificationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "red",
-    position: "absolute",
-    top: 0,
-    right: -2,
   },
 });

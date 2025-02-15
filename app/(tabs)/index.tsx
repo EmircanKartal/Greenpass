@@ -5,38 +5,15 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  ImageBackground,
 } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import Header from "@/components/Header";
-import EcoPointsCard from "@/components/EcoPointsCard";
+import HomePageCard from "@/components/home-page-card";
 import UserCard from "@/components/UserCard";
 import WelcomePopup from "@/components/WelcomePopup";
 import happyManProfile from "../../assets/images/happy-man-profile.jpeg";
 import marketImage from "../../assets/images/marketplace.jpg";
-import shoppingMallImage from "../../assets/images/shopping-mall.png"; // Ensure you have this image in the assets
-
-const activities = [
-  {
-    title: "Eco Flight with Turkish Airlines",
-    date: "April 5, 2023",
-    points: "+200 EP",
-    logo: require("@/assets/images/turkish-airlines-logo.png"),
-  },
-  {
-    title: "Eco Flight with A-Jet",
-    date: "April 8, 2023",
-    points: "+150 EP",
-    logo: require("@/assets/images/a-jet.png"),
-  },
-  {
-    title: "Eco Flight with Sun Express",
-    date: "April 12, 2023",
-    points: "+180 EP",
-    logo: require("@/assets/images/sun-express.png"),
-  },
-];
+import Transaction from "@/components/Transaction";
 
 const userProfile = {
   name: "Hazerfen Çelebi",
@@ -70,49 +47,37 @@ export default function HomeScreen() {
         {/* User Card */}
         <UserCard profile={userProfile} />
 
-        {/* Eco Points Card */}
-        <EcoPointsCard progress={72} />
+        {/* Home Page Cards */}
+        <HomePageCard
+          title="Eco-Friendly Travel"
+          topic="Sustainable Travel"
+          backgroundColor="#a2f2c9"
+          textColor="#1d6367"
+          imageUrl="https://www.flyairnorth.com/sites/default/files/styles/hero_image_lg/public/2025-02/Valentines%20Sale%202025%20-%20AirNorth.com%20Hero.png?h=40f26a99&itok=kT5RNUKc"
+          navigateTo="routeSuggestions"
+          icon="plane" // ✈️ Added relevant icon
+        />
 
-        {/* Claim Button */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("routeSuggestions")}
-        >
-          <Text style={styles.buttonText}>Claim Eco Points</Text>
-        </TouchableOpacity>
-
-        {/* Marketplace Card */}
+        <HomePageCard
+          title="Sustainable Shopping"
+          topic="Eco-Conscious Stores"
+          backgroundColor="#1d6367"
+          textColor="#ffffff"
+          imageUrl={marketImage}
+          navigateTo="market"
+          icon="shopping-bag" // 🛍️ Added relevant icon
+        />
 
         {/* Transactions Section */}
         <View style={styles.transactionsCard}>
           <View style={styles.transactionsHeader}>
-            <Text style={styles.transactionsTitle}>Activities</Text>
+            <Text style={styles.transactionsTitle}>February 2025</Text>
             <TouchableOpacity>
               <Text style={styles.seeAll}>See all</Text>
             </TouchableOpacity>
           </View>
 
-          {activities.map((activity, index) => (
-            <View key={index} style={styles.transactionItem}>
-              <Image source={activity.logo} style={styles.logo} />
-              <View style={styles.transactionDetails}>
-                <Text style={styles.transactionTitle}>{activity.title}</Text>
-                <Text style={styles.transactionDate}>{activity.date}</Text>
-              </View>
-              <Text
-                style={[
-                  styles.transactionPoints,
-                  {
-                    color: activity.points.includes("+")
-                      ? "#32CD32"
-                      : "#FF6347",
-                  },
-                ]}
-              >
-                {activity.points}
-              </Text>
-            </View>
-          ))}
+          <Transaction />
         </View>
       </ScrollView>
     </View>
@@ -138,49 +103,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  marketplaceCard: {
-    width: 410, // Adjust the width to 410px
-    height: 210, // Adjust the height to make it square
-    marginBottom: 24,
-    borderRadius: 12,
-    overflow: "hidden",
-    elevation: 5,
-  },
-
-  marketplaceBackground: {
-    flex: 1,
-    justifyContent: "flex-end", // Position the text at the bottom
-    alignItems: "center",
-  },
-
-  overlay: {
-    ...StyleSheet.absoluteFillObject, // Covers the entire background
-    backgroundColor: "rgba(255, 255, 255, 0.7)", // White overlay with 0.8 opacity
-    borderRadius: 12, // Ensure the overlay matches the card's rounded corners
-  },
-
-  marketplaceText: {
-    fontSize: 44, // Slightly larger font for better visibility
-    fontWeight: "bold",
-    color: "#333", // Darker text for contrast with the white overlay
-    marginBottom: 22, // Space from the bottom
-    textAlign: "center",
-  },
 
   transactionsCard: {
     backgroundColor: "#fff",
     borderRadius: 20,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 5,
+    paddingHorizontal: 20,
     marginBottom: 24,
   },
   transactionsHeader: {

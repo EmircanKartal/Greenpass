@@ -7,351 +7,199 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
-  ViewStyle,
-  TextStyle,
-  ImageStyle,
   ImageBackground,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import happyManProfile from "../../assets/images/happy-man-profile.jpeg";
 
-interface Styles {
-  container: ViewStyle;
-  header: ViewStyle;
-  avatar: ImageStyle;
-  headerText: ViewStyle;
-  name: TextStyle;
-  level: TextStyle;
-  card: ViewStyle;
-  pointsHeader: ViewStyle;
-  pointsTitle: TextStyle;
-  points: TextStyle;
-  progressContainer: ViewStyle;
-  progressHeader: ViewStyle;
-  progressText: TextStyle;
-  progressPercent: TextStyle;
-  progressBar: ViewStyle;
-  progressFill: ViewStyle;
-  menu: ViewStyle;
-  menuItem: ViewStyle;
-  menuIcon: ViewStyle;
-  iconPlaceholder: ViewStyle;
-  menuContent: ViewStyle;
-  menuTitle: TextStyle;
-  menuSubtitle: TextStyle;
-  menuArrow: TextStyle;
-  impactCard: ViewStyle;
-  impactTitle: TextStyle;
-  impactText: TextStyle;
-  headerContainer: ViewStyle;
-  headerBackground: ViewStyle;
-  headerOverlay: ViewStyle;
-}
-
-interface UserProfile {
-  name: string;
-  points: number;
-  level: string;
-  battlePassProgress: number;
-  avatarUrl: string;
-}
-
-interface MenuItem {
-  title: string;
-  subtitle: string;
-  icon?: React.ReactNode;
-  onPress?: () => void;
-}
-
-interface MenuItemProps extends MenuItem {
-  icon?: React.ReactNode;
-}
-
-const MenuItem: React.FC<MenuItemProps> = ({
-  icon,
-  title,
-  subtitle,
-  onPress,
-}) => (
-  <TouchableOpacity style={styles.menuItem} onPress={onPress}>
-    <View style={styles.menuIcon}>
-      {icon || <AntDesign name="star" size={24} color="#E0E0E0" />}
-    </View>
-    <View style={styles.menuContent}>
-      <Text style={styles.menuTitle}>{title}</Text>
-      <Text style={styles.menuSubtitle}>{subtitle}</Text>
-    </View>
-    <Text style={styles.menuArrow}>›</Text>
-  </TouchableOpacity>
-);
-
 const ProfileScreen: React.FC = () => {
-  const userProfile: UserProfile = {
+  const userProfile = {
     name: "Hazerfen Çelebi",
     points: 4750,
-    level: "Eco Pioneer",
-    battlePassProgress: 75,
+    level: "Green Pass",
+    battlePassProgress: 72,
     avatarUrl: happyManProfile,
   };
 
-  console.log(userProfile.avatarUrl);
-
-  const menuItems: MenuItem[] = [
+  const discoverItems = [
     {
       title: "Achievements",
       subtitle: "12 Badges Earned",
-      icon: <AntDesign name="Trophy" size={24} color="#32CD32" />,
-      onPress: () => console.log("Achievements pressed"),
+      icon: "trophy",
     },
     {
       title: "Friends",
       subtitle: "Connect & Compare",
-      icon: <AntDesign name="team" size={24} color="#32CD32" />,
-      onPress: () => console.log("Friends pressed"),
+      icon: "user-friends",
     },
     {
       title: "Rewards",
       subtitle: "View Store",
-      icon: <AntDesign name="gift" size={24} color="#32CD32" />,
-      onPress: () => console.log("Rewards pressed"),
+      icon: "gift",
     },
     {
       title: "Notifications",
       subtitle: "Manage Alerts",
-      icon: <AntDesign name="bells" size={24} color="#32CD32" />,
-      onPress: () => console.log("Notifications pressed"),
+      icon: "bell",
     },
     {
       title: "Settings",
       subtitle: "Account Preferences",
-      icon: <AntDesign name="setting" size={24} color="#32CD32" />,
-      onPress: () => console.log("Settings pressed"),
+      icon: "cog",
     },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* Profile Header */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+        {/* Background Image */}
         <View style={styles.headerContainer}>
           <ImageBackground
             source={require("../../assets/images/transparent-background-profile-banner.jpeg")}
             style={styles.headerBackground}
           >
-            <View style={styles.headerOverlay}>
-              <View style={styles.header}>
-                <Image
-                  source={require("../../assets/images/happy-man-profile.jpeg")}
-                  style={styles.avatar}
-                />
-                <View style={styles.headerText}>
-                  <Text style={styles.name}>{userProfile.name}</Text>
-                  <Text style={styles.level}>{userProfile.level}</Text>
-                </View>
+            <View style={styles.headerOverlay} />
+          </ImageBackground>
+
+          {/* Profile Card */}
+          <View style={styles.profileCard}>
+            <Image source={userProfile.avatarUrl} style={styles.avatar} />
+            <View>
+              <Text style={styles.name}>{userProfile.name}</Text>
+              <View style={styles.statsRow}>
+                <Text style={styles.statsText}>
+                  <FontAwesome5 name="leaf" size={16} color="#32CD32" />{" "}
+                  {userProfile.points} EP
+                </Text>
+                <View style={styles.separator} />
+                <Text style={styles.statsText}>
+                  <FontAwesome5 name="shield-alt" size={16} color="#32CD32" />{" "}
+                  {userProfile.level}
+                </Text>
               </View>
             </View>
-          </ImageBackground>
-        </View>
-
-        {/* Points Card */}
-        <View style={styles.card}>
-          <View style={styles.pointsHeader}>
-            <Text style={styles.pointsTitle}>EcoPoints</Text>
-            <Text style={styles.points}>{userProfile.points}</Text>
-          </View>
-
-          {/* Battle Pass Progress */}
-          <View style={styles.progressContainer}>
-            <View style={styles.progressHeader}>
-              <Text style={styles.progressText}>GreenPass Progress</Text>
-              <Text style={styles.progressPercent}>
-                {userProfile.battlePassProgress}%
-              </Text>
-            </View>
-            <View style={styles.progressBar}>
-              <View
-                style={[
-                  styles.progressFill,
-                  { width: `${userProfile.battlePassProgress}%` },
-                ]}
-              />
-            </View>
           </View>
         </View>
 
-        {/* Menu Items */}
-        <View style={styles.menu}>
-          {menuItems.map((item, index) => (
-            <MenuItem key={index} {...item} />
-          ))}
-        </View>
-
-        {/* Environmental Impact */}
-        <View style={styles.impactCard}>
-          <Text style={styles.impactTitle}>Your Environmental Impact</Text>
-          <Text style={styles.impactText}>
-            You've saved 2.5 tons of CO2 through eco-friendly flight choices!
-          </Text>
-        </View>
+        {/* Discover More Section */}
+        <Text style={styles.sectionTitle}>Discover More</Text>
+        {discoverItems.map((item, index) => (
+          <TouchableOpacity key={index} style={styles.card}>
+            <View style={styles.iconContainer}>
+              <FontAwesome5 name={item.icon} size={25} color="#2f7d31" />
+            </View>
+            <View style={styles.cardTextContainer}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.cardSubtitle}>{item.subtitle}</Text>
+            </View>
+            <AntDesign name="right" size={20} color="#666" />
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create<Styles>({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    borderWidth: 4,
-    borderColor: "#FFFFFF",
-  },
-  headerText: {
-    marginLeft: 15,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-  },
-  level: {
-    fontSize: 16,
-    color: "#EDEDED",
-  },
-  card: {
-    backgroundColor: "#FFFFFF",
-    margin: 15,
-    marginTop: 5,
-    borderRadius: 15,
-    padding: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  pointsHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  pointsTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  points: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#2f7d31",
-  },
-  progressContainer: {
-    marginTop: 10,
-  },
-  progressHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-  },
-  progressText: {
-    fontSize: 14,
-    color: "#666666",
-  },
-  progressPercent: {
-    fontSize: 14,
-    color: "#666666",
-  },
-  progressBar: {
-    height: 8,
-    backgroundColor: "#E0E0E0",
-    borderRadius: 4,
-    overflow: "hidden",
-  },
-  progressFill: {
-    height: "100%",
-    backgroundColor: "#32cd32",
-    borderRadius: 4,
-  },
-  menu: {
-    backgroundColor: "#FFFFFF",
-    marginTop: 15,
-  },
-  menuItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  menuIcon: {
-    width: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconPlaceholder: {
-    width: 24,
-    height: 24,
-    backgroundColor: "#E0E0E0",
-    borderRadius: 12,
-  },
-  menuContent: {
-    flex: 1,
-    marginLeft: 15,
-  },
-  menuTitle: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  menuSubtitle: {
-    fontSize: 14,
-    color: "#666666",
-    marginTop: 2,
-  },
-  menuArrow: {
-    fontSize: 20,
-    color: "#CCCCCC",
-  },
-  impactCard: {
-    backgroundColor: "#FFFFFF",
-    margin: 15,
-    padding: 15,
-    borderRadius: 15,
-    marginBottom: 30,
-  },
-  impactTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#2f7d31",
-    marginBottom: 8,
-  },
-  impactText: {
-    fontSize: 14,
-    color: "#666666",
-    lineHeight: 20,
-  },
   headerContainer: {
-    height: 150,
+    position: "relative",
+    height: 250,
   },
   headerBackground: {
     width: "100%",
-    height: 120,
+    height: "100%",
   },
   headerOverlay: {
-    backgroundColor: "rgba(76, 175, 80, 0.75)",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(76, 175, 80, 0.5)",
+  },
+  profileCard: {
+    position: "absolute",
+    top: "65%",
+    left: "10%",
+    right: "10%",
+    backgroundColor: "#FFF",
+    padding: 19,
+    borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    elevation: 5,
+  },
+  avatar: {
+    width: 90,
+    height: 90,
+    borderRadius: 35,
+    marginRight: 16,
+  },
+  name: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  statsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+  },
+  statsText: {
+    fontSize: 14,
+    color: "#32CD32",
+    fontWeight: "600",
+  },
+  separator: {
+    width: 8,
+    height: 8,
+    backgroundColor: "#fff",
+    borderRadius: 4,
+    marginHorizontal: 6,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "800",
+    letterSpacing: 1,
+    color: "#333",
+    textAlign: "left",
+    marginTop: 60,
+    marginBottom: 16,
+    marginLeft: 30,
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    marginHorizontal: 30,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    elevation: 3,
+  },
+  iconContainer: {
+    width: 52,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E8",
+    borderRadius: 12,
+    marginRight: 12,
+  },
+  cardTextContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    letterSpacing: 1,
+    color: "#333",
+  },
+  cardSubtitle: {
+    fontSize: 15,
+    color: "#888",
   },
 });
 
